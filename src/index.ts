@@ -1,6 +1,6 @@
 import { GamePlay } from "./gamePlay";
 import { gameInstance } from "./gameInstance";
-import { Direction } from "./enums/direction";
+import { ActorState, Direction } from "./enums/direction";
 
 export function main() {
   const eleBound = document.body.getBoundingClientRect();
@@ -22,17 +22,27 @@ export function main() {
     height: viewportHeight,
   });
 
-	(new GamePlay()).run();
+  new GamePlay().run();
 
-  document.addEventListener('keydown', (evt) => {
+  document.addEventListener("keydown", (evt) => {
+    console.log("keydown ", evt.key);
     if (evt.keyCode === 37) {
       gameInstance.updateDirection(Direction.backward);
-    } 
-    if (evt.keyCode === 39) {
+      gameInstance.updateActorState(ActorState.walk);
+      gameInstance.isKeyPress = true;
+    } else if (evt.keyCode === 39) {
       gameInstance.updateDirection(Direction.forward);
+      gameInstance.updateActorState(ActorState.walk);
+      gameInstance.isKeyPress = true;
     }
-  })
+  });
 
+  document.addEventListener("keyup", (evt) => {
+    if (evt.keyCode === 37 || evt.keyCode === 39) {
+      gameInstance.updateActorState(ActorState.idle);
+      gameInstance.isKeyPress = false;
+    }
+  });
 }
 
 main();

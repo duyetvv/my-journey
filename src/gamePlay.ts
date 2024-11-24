@@ -1,4 +1,4 @@
-import { ManIdle } from "./entities/citymen/idle";
+import { CityMan } from "./entities/citymen/city-man";
 import { Direction } from "./enums/direction";
 import { gameInstance } from "./gameInstance";
 import { timestamp } from "./helpers/timeStamp";
@@ -6,7 +6,7 @@ import { timestamp } from "./helpers/timeStamp";
 export class GamePlay {
   tpf: number = 60; // time per frame
   frameId!: number;
-  idleMan!: ManIdle;
+  cityMan!: CityMan;
   currDirection: number = Direction.forward;
 
   constructor() {
@@ -14,17 +14,28 @@ export class GamePlay {
   }
 
   init(): void {
-    this.idleMan = new ManIdle(gameInstance.currDirection);
+    this.cityMan = new CityMan();
   }
 
-  update(deltaTime: number): void {
-    this.idleMan = new ManIdle(gameInstance.currDirection);
-    gameInstance.context!.clearRect(0, 0, gameInstance.viewport.width, gameInstance.viewport.height);
-    this.idleMan.update();
+  update(deltaTime: number): void { 
+    if (gameInstance.isKeyPress) {
+      gameInstance.fpsOnKeyPressCounter += 1;
+    } else {
+      gameInstance.fpsOnKeyPressCounter = 0;
+    }
+
+    gameInstance.context!.clearRect(
+      0,
+      0,
+      gameInstance.viewport.width,
+      gameInstance.viewport.height
+    );
+    this.cityMan.getInstance();
+    this.cityMan.update();
   }
 
   render(deltaTime: number): void {
-    this.idleMan.render();
+    this.cityMan.render();
   }
 
   run(): void {
@@ -32,7 +43,7 @@ export class GamePlay {
     let now = 0;
     let dt = 0;
     let last = timestamp();
-    let step = 1000 / 30;
+    let step = 1000 / gameInstance.gamePlayFPS;
 
     function frame() {
       now = timestamp();
@@ -52,6 +63,6 @@ export class GamePlay {
   }
 
   stop(): void {
-    cancelAnimationFrame(this.frameId)
+    cancelAnimationFrame(this.frameId);
   }
 }

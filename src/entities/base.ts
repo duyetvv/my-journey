@@ -1,4 +1,4 @@
-export class SpriteBase {
+export abstract class SpriteBase {
   private currSpriteIdx: number = 0;
 
   constructor(
@@ -6,10 +6,10 @@ export class SpriteBase {
     private endIdx: number,
     private width: number,
     private height: number,
-    private spritesPerRow: number
+    private spritesPerRow: number,
   ) {}
 
-  getUpdate() {
+  getSprite() {
     this.currSpriteIdx++;
     this.currSpriteIdx > this.endIdx && (this.currSpriteIdx = this.startIdx);
     const x = (this.currSpriteIdx % this.spritesPerRow) * this.width;
@@ -22,4 +22,7 @@ export class SpriteBase {
       height: this.height,
     };
   }
+
+  abstract update(): void;
+  abstract render(x: number, y: number): void;
 }
