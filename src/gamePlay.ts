@@ -1,5 +1,5 @@
 import { CityMan } from "./entities/citymen/city-man";
-import { Direction } from "./enums/direction";
+import { Direction } from "./enums/io";
 import { gameInstance } from "./gameInstance";
 import { timestamp } from "./helpers/timeStamp";
 
@@ -19,17 +19,18 @@ export class GamePlay {
 
   update(deltaTime: number): void { 
     if (gameInstance.isKeyPress) {
-      gameInstance.fpsOnKeyPressCounter += 1;
+      gameInstance.fpsPressingCount += 1;
     } else {
-      gameInstance.fpsOnKeyPressCounter = 0;
+      gameInstance.fpsPressingCount = 0;
     }
 
-    gameInstance.context!.clearRect(
+    gameInstance.getContext()!.clearRect(
       0,
       0,
-      gameInstance.viewport.width,
-      gameInstance.viewport.height
+      gameInstance.getViewport().width,
+      gameInstance.getViewport().height
     );
+
     this.cityMan.getInstance();
     this.cityMan.update();
   }

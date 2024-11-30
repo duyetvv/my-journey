@@ -1,32 +1,49 @@
-import { ActorState, Direction } from './enums/direction';
-import { createImage } from './helpers/createImage';
+import { ActorState } from "./enums/actor";
+import { Direction } from "./enums/io";
+import { Position } from "./interfaces/actor";
+import { Size } from "./interfaces/size";
 
 class GameInstance {
   manFPS: number = 30;
   gamePlayFPS: number = 60;
   isKeyPress: boolean = false;
-  fpsOnKeyPressCounter: number = 0;
+  fpsPressingCount: number = 0;
 
-  context!: CanvasRenderingContext2D;
-  initContext(currContext: CanvasRenderingContext2D) {
+  private context!: CanvasRenderingContext2D;
+  getContext = (): CanvasRenderingContext2D => this.context;
+  setContext(currContext: CanvasRenderingContext2D): void {
     this.context = currContext;
   }
 
-  viewport!: { width: number; height: number };
-  updateViewport(currViewport: { width: number; height: number }) {
+  private viewport!: Size;
+  getViewport = (): Size => this.viewport;
+  setViewport(currViewport: Size): void {
     this.viewport = currViewport;
   }
 
-  currDirection: number = Direction.forward;
-  updateDirection(newDirection: number) {
-    this.currDirection = newDirection;
+  private direction: number = Direction.forward;
+  getDirection = (): number => this.direction;
+  setDirection(newDirection: number): void {
+    this.direction = newDirection;
   }
 
-  actorState: number = ActorState.idle;
-  updateActorState(newActorState: number) {
+  private actorState: number = ActorState.idle;
+  getActorState = (): number => this.actorState;
+  setActorState(newActorState: number): void {
     this.actorState = newActorState;
+  }
+
+  private actorPosition: Position = { x: 0, y: 0 };
+  getActorPosition = (): Position => this.actorPosition;
+  setActorPosition(newPosition: Position): void {
+    this.actorPosition = newPosition;
+  }
+  setActorPositionX(posX: number): void {
+    this.actorPosition.x = posX;
+  }
+  setActorPositionY(posY: number): void {
+    this.actorPosition.y = posY;
   }
 }
 
 export const gameInstance = new GameInstance();
-

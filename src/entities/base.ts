@@ -12,8 +12,8 @@ export abstract class SpriteBase {
   getSprite() {
     this.currSpriteIdx++;
     this.currSpriteIdx > this.endIdx && (this.currSpriteIdx = this.startIdx);
-    const x = (this.currSpriteIdx % this.spritesPerRow) * this.width;
-    const y = this.currSpriteIdx / this.spritesPerRow;
+    let x = (this.currSpriteIdx % this.spritesPerRow) * this.width;
+    let y = this.currSpriteIdx / this.spritesPerRow;
 
     return {
       x,

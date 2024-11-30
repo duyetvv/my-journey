@@ -1,6 +1,7 @@
 import { GamePlay } from "./gamePlay";
 import { gameInstance } from "./gameInstance";
-import { ActorState, Direction } from "./enums/direction";
+import { ActorState } from "./enums/actor";
+import { Direction, KeyActions } from "./enums/io";
 
 export function main() {
   const eleBound = document.body.getBoundingClientRect();
@@ -16,30 +17,27 @@ export function main() {
   canvas.setAttribute("width", viewportWidth.toString());
   canvas.setAttribute("height", viewportHeight.toString());
 
-  gameInstance.initContext(context!);
-  gameInstance.updateViewport({
-    width: viewportWidth,
-    height: viewportHeight,
-  });
+  gameInstance.setContext(context!);
+  gameInstance.setViewport({ width: viewportWidth, height: viewportHeight });
+  gameInstance.setActorPosition({ x: 0, y: parseInt((viewportHeight / 2).toString(), 10) });
 
   new GamePlay().run();
 
-  document.addEventListener("keydown", (evt) => {
-    console.log("keydown ", evt.key);
+  document.addEventListener(KeyActions.keydown, (evt) => {
     if (evt.keyCode === 37) {
-      gameInstance.updateDirection(Direction.backward);
-      gameInstance.updateActorState(ActorState.walk);
+      gameInstance.setDirection(Direction.backward);
+      gameInstance.setActorState(ActorState.walk);
       gameInstance.isKeyPress = true;
     } else if (evt.keyCode === 39) {
-      gameInstance.updateDirection(Direction.forward);
-      gameInstance.updateActorState(ActorState.walk);
+      gameInstance.setDirection(Direction.forward);
+      gameInstance.setActorState(ActorState.walk);
       gameInstance.isKeyPress = true;
     }
   });
 
-  document.addEventListener("keyup", (evt) => {
+  document.addEventListener(KeyActions.keyup, (evt) => {
     if (evt.keyCode === 37 || evt.keyCode === 39) {
-      gameInstance.updateActorState(ActorState.idle);
+      gameInstance.setActorState(ActorState.idle);
       gameInstance.isKeyPress = false;
     }
   });

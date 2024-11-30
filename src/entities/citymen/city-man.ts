@@ -1,14 +1,14 @@
 import { SpriteBase } from "../base";
-import { createImage } from "../../helpers/createImage";
 import { gameInstance } from "../../gameInstance";
-import { ActorState, Direction } from "../../enums/direction";
+import { ActorState } from "../../enums/actor";
 import { ManIdle } from "./idle";
 import { WalkMan } from "./walk";
+import { Direction } from "../../enums/io";
 
 export class CityMan {
-  posX: number = 100;
-  posY: number = 100;
-  velocity: number = 5;
+  posX: number = gameInstance.getActorPosition().x;
+  posY: number = gameInstance.getActorPosition().y;
+  velocity: number = 8;
 
   idleMan = new ManIdle();
   walkMain = new WalkMan();
@@ -17,11 +17,12 @@ export class CityMan {
 
   constructor() {
     this.stateMan = this.idleMan;
+    console.log("Calculate posX [constructor]");
+    this.posX = gameInstance.getActorPosition().x;
   }
 
   getInstance(): void {
-    console.log('getInstance CityMan ', gameInstance.actorState);
-    switch (gameInstance.actorState) {
+    switch (gameInstance.getActorState()) {
       case ActorState.walk:
         this.stateMan = this.walkMain;
         break;
@@ -32,9 +33,26 @@ export class CityMan {
   }
 
   update(): void {
-    if (gameInstance.fpsOnKeyPressCounter) {
-      this.posX = this.velocity * gameInstance.fpsOnKeyPressCounter * Direction.forward;
+    if (!gameInstance.fpsPressingCount) {
+      gameInstance.setActorPositionX(this.posX);
+      this.stateMan.update();
+      return;
     }
+
+    const viewport = gameInstance.getViewport();
+    const direction = gameInstance.getDirection();
+    const distance: number = this.velocity * gameInstance.fpsPressingCount;
+
+    this.posX = gameInstance.getActorPosition().x + distance * direction;
+
+    if (this.posX < 0 && direction === Direction.backward) {
+      this.posX = (this.posX % viewport.width) + viewport.width;
+    }
+
+    if (this.posX > viewport.width && direction === Direction.forward) {
+      this.posX = this.posX % viewport.width;
+    }
+
     this.stateMan.update();
   }
 
