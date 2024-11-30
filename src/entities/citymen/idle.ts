@@ -7,18 +7,17 @@ import { Specification } from "../../interfaces/actor";
 export class ManIdle extends SpriteBase {
   image: HTMLImageElement = null;
   private paddingX: number = 46;
-  private paddingTop: number = 59;
   private spriteWidth: number = 30;
-  private spriteHeight: number = 69;
+  private spriteHeight: number = 66;
 
   private spec: Specification = {
-    size: { width: 30, height: 69 },
+    size: { width: 30, height: 66 },
     velocity: 0,
     fps: 60,
   };
 
   constructor() {
-    super(0, 5, 128, 128, 6);
+    super(0, 5, 128, 66, 6);
     this.update();
   }
 
@@ -42,7 +41,7 @@ export class ManIdle extends SpriteBase {
       .drawImage(
         this.image,
         spriteInfo.x + this.paddingX + flipDistance,
-        spriteInfo.y + this.paddingTop,
+        spriteInfo.y,
         this.spriteWidth,
         this.spriteHeight,
         posX,
