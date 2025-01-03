@@ -1,8 +1,8 @@
 import { gameInstance } from "../../gameInstance";
 import { Direction } from "../../enums/io";
-import { ManIdle } from "./suitmen/idle";
-import { WalkMan } from "./suitmen/walk";
-import { AttackMan } from "./suitmen/attack";
+import { ManIdle } from "./instances/idle";
+import { WalkMan } from "./instances/walk";
+import { AttackMan } from "./instances/attack";
 
 export class CityMan {
   posX: number = gameInstance.getViewport().width / 2;

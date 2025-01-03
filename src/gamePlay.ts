@@ -1,4 +1,4 @@
-import { CityMan } from "./entities/citymen/main";
+import { CityMan } from "./entities/businessman/main";
 import { Direction } from "./enums/io";
 import { gameInstance } from "./gameInstance";
 import { timestamp } from "./helpers/timeStamp";

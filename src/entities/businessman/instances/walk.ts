@@ -39,9 +39,9 @@ export class WalkMan extends SpriteBase {
   
   update(direction: number): void {
     if (direction === Direction.forward) {
-      this.image = createImage("../../assets/citymen/businessman/walk.png");
+      this.image = createImage("../../assets/citymen/business/walk.png");
     } else {
-      this.image = createImage("../../assets/citymen/businessman/walk-flip.png");
+      this.image = createImage("../../assets/citymen/business/walk-flip.png");
     }
   }
 

@@ -3,30 +3,29 @@ import { createImage } from "../../../helpers/createImage";
 import { Direction } from "../../../enums/io";
 import { RenderSpec, Specification } from "../../../interfaces/actor";
 
-export class AttackMan extends SpriteBase {
+export class ManIdle extends SpriteBase {
   image: HTMLImageElement = null;
-  private paddingX: number = 44;
-  private spriteWidth: number = 50;
-  private spriteHeight: number = 64;
+  private paddingX: number = 46;
+  private spriteWidth: number = 30;
+  private spriteHeight: number = 66;
   private currDirection: number = Direction.forward;
 
   private spec: Specification = {
-    size: { width: 30, height: 64 },
+    size: { width: 30, height: 66 },
     velocity: 0,
     fps: 60,
   };
 
   constructor() {
-    super(0, 5, 128, 64, 4);
+    super(0, 5, 128, 66, 6);
   }
 
   getSpec = (): Specification => this.spec;
 
   getRenderSpec = (): RenderSpec => {
     const spriteInfo = this.getSprite();
-    const isForward = this.currDirection === Direction.forward;
-    const flipDistance: number = isForward ? 0 : -10;
-    const spriteFootX = isForward ? 0 : -16;
+    const flipDistance: number =
+      this.currDirection === Direction.forward ? 0 : 4;
 
     return {
       image: this.image,
@@ -34,7 +33,7 @@ export class AttackMan extends SpriteBase {
       sy: spriteInfo.y,
       sw: this.spriteWidth,
       sh: this.spriteHeight,
-      sfx: spriteFootX,
+      sfx: 0,
       dw: this.spriteWidth,
       dh: this.spriteHeight
     };
@@ -43,9 +42,9 @@ export class AttackMan extends SpriteBase {
   update(direction: number): void {
     this.currDirection = direction;
     if (direction === Direction.forward) {
-      this.image = createImage("../../assets/citymen/businessman/attack.png");
+      this.image = createImage("../../assets/citymen/business/idle.png");
     } else {
-      this.image = createImage("../../assets/citymen/businessman/attack-flip.png");
+      this.image = createImage("../../assets/citymen/business/idle-flip.png");
     }
   }
 
