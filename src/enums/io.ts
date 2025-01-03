@@ -7,3 +7,10 @@ export enum KeyActions {
   keydown = "keydown",
   keyup = "keyup",
 }
+
+export enum KeyCodes {
+  arrowRight = "ArrowRight",
+  arrowLeft = "ArrowLeft",
+  space = "Space",
+  keyD = "KeyD",
+}

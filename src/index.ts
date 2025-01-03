@@ -1,9 +1,8 @@
 import { GamePlay } from "./gamePlay";
 import { gameInstance } from "./gameInstance";
-import { ActorState } from "./enums/actor";
-import { Direction, KeyActions } from "./enums/io";
+import { Direction, KeyActions, KeyCodes } from "./enums/io";
 
-export function main() {
+(function main() {
   const eleBound = document.body.getBoundingClientRect();
 
   let canvas = document.body.getElementsByTagName("canvas")[0];
@@ -16,31 +15,42 @@ export function main() {
   document.body.appendChild(canvas);
   canvas.setAttribute("width", viewportWidth.toString());
   canvas.setAttribute("height", viewportHeight.toString());
-
+  
+  console.log("[Main Context]:: ", context);
   gameInstance.setContext(context!);
   gameInstance.setViewport({ width: viewportWidth, height: viewportHeight });
-  gameInstance.setActorPosition({ x: 0, y: parseInt((viewportHeight / 2).toString(), 10) });
 
   new GamePlay().run();
 
   document.addEventListener(KeyActions.keydown, (evt) => {
-    if (evt.keyCode === 37) {
-      gameInstance.setDirection(Direction.backward);
-      gameInstance.setActorState(ActorState.walk);
-      gameInstance.isKeyPress = true;
-    } else if (evt.keyCode === 39) {
-      gameInstance.setDirection(Direction.forward);
-      gameInstance.setActorState(ActorState.walk);
-      gameInstance.isKeyPress = true;
+    switch (evt.code) {
+      case KeyCodes.arrowLeft:
+        gameInstance.setDirection(Direction.backward);
+        gameInstance.isMovingPress = true;
+        break;
+      case KeyCodes.arrowRight:
+        gameInstance.setDirection(Direction.forward);
+        gameInstance.isMovingPress = true;
+        break;
+      case KeyCodes.keyD:
+        gameInstance.isAttackingPress = true;
+      default:
+        break;
     }
   });
 
   document.addEventListener(KeyActions.keyup, (evt) => {
-    if (evt.keyCode === 37 || evt.keyCode === 39) {
-      gameInstance.setActorState(ActorState.idle);
-      gameInstance.isKeyPress = false;
+    switch (evt.code) {
+      case KeyCodes.arrowLeft:
+      case KeyCodes.arrowRight:
+        gameInstance.isMovingPress = false;
+        break;
+      case KeyCodes.keyD:
+        gameInstance.isAttackingPress = false;
+        break;
+      default:
+        break;
     }
   });
-}
+})();
 
-main();

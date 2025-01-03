@@ -1,12 +1,13 @@
-import { CityMan } from "./entities/citymen/city-man";
+import { CityMan } from "./entities/citymen/main";
 import { Direction } from "./enums/io";
 import { gameInstance } from "./gameInstance";
 import { timestamp } from "./helpers/timeStamp";
 
 export class GamePlay {
-  tpf: number = 60; // time per frame
+  tpf: number = 300; // time per frame
   frameId!: number;
   cityMan!: CityMan;
+  cityMan1!: CityMan;
   currDirection: number = Direction.forward;
 
   constructor() {
@@ -14,14 +15,15 @@ export class GamePlay {
   }
 
   init(): void {
-    this.cityMan = new CityMan();
+    this.cityMan = new CityMan(100);
+    this.cityMan1 = new CityMan(200);
   }
 
   update(deltaTime: number): void { 
-    if (gameInstance.isKeyPress) {
-      gameInstance.fpsPressingCount += 1;
+    if (gameInstance.isMovingPress) {
+      gameInstance.fpsMovingCount += 1;
     } else {
-      gameInstance.fpsPressingCount = 0;
+      gameInstance.fpsMovingCount = 0;
     }
 
     gameInstance.getContext()!.clearRect(
@@ -31,12 +33,13 @@ export class GamePlay {
       gameInstance.getViewport().height
     );
 
-    this.cityMan.getInstance();
     this.cityMan.update();
+    this.cityMan1.update();
   }
 
   render(deltaTime: number): void {
     this.cityMan.render();
+    this.cityMan1.render();
   }
 
   run(): void {
@@ -54,7 +57,7 @@ export class GamePlay {
         dt = dt - step;
         that.update(step);
       }
-
+      
       that.render(dt);
       last = now;
       that.frameId = requestAnimationFrame(frame);

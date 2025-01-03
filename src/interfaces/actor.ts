@@ -6,7 +6,18 @@ export interface Position {
 }
 
 export interface Specification {
-  size: Size,
-  velocity: number,
-  fps: number,
+  size: Size;
+  velocity: number;
+  fps: number;
+}
+
+export interface RenderSpec {
+  image: HTMLImageElement;
+  sx: number;
+  sy: number;
+  sw: number;
+  sh: number;
+  sfx: number; // Sprite Foot X on frame.
+  dw: number;
+  dh: number;
 }

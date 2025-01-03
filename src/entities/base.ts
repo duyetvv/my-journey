@@ -23,6 +23,6 @@ export abstract class SpriteBase {
     };
   }
 
-  abstract update(): void;
+  abstract update(direction: number): void;
   abstract render(x: number, y: number): void;
 }
