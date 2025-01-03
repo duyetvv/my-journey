@@ -1,6 +1,5 @@
 import { SpriteBase } from "../../base";
 import { createImage } from "../../../helpers/createImage";
-import { gameInstance } from "../../../gameInstance";
 import { Direction } from "../../../enums/io";
 import { RenderSpec, Specification } from "../../../interfaces/actor";
 
