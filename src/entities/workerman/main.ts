@@ -1,21 +1,21 @@
 import { gameInstance } from "../../gameInstance";
 import { Direction } from "../../enums/io";
-import { ManIdle } from "./instances/idle";
-import { WalkMan } from "./instances/walk";
-import { RunMan } from "./instances/run";
-import { AttackMan } from "./instances/attack";
+import { WorkerIdle } from "./instances/idle";
+import { WorkerWalk } from "./instances/walk";
+import { WorkerRun } from "./instances/run";
+import { WorkerAttack } from "./instances/attack";
 
-export class CityMan {
+export class WorkerMan {
   posX: number = gameInstance.getViewport().width / 2;
   posY: number = gameInstance.getViewport().height / 2;
   velocity: number = 0;
 
-  idleMan = new ManIdle();
-  walkMan = new WalkMan();
-  runMan = new RunMan();
-  attackMan = new AttackMan();
+  idleMan = new WorkerIdle();
+  walkMan = new WorkerWalk();
+  runMan = new WorkerRun();
+  attackMan = new WorkerAttack();
 
-  private currInstance: ManIdle | WalkMan | RunMan | AttackMan = null;
+  private currInstance: WorkerIdle | WorkerWalk | WorkerRun | WorkerAttack = null;
 
   constructor(posX: number) {
     this.posX = posX;

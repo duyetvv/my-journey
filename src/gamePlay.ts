@@ -1,13 +1,15 @@
 import { CityMan } from "./entities/businessman/main";
+import { WorkerMan } from "./entities/workerman/main";
 import { Direction } from "./enums/io";
 import { gameInstance } from "./gameInstance";
 import { timestamp } from "./helpers/timeStamp";
 
 export class GamePlay {
-  tpf: number = 300; // time per frame
+  tpf: number = Math.floor(1000 / gameInstance.gamePlayFPS);
+
   frameId!: number;
   cityMan!: CityMan;
-  cityMan1!: CityMan;
+  workerMan!: WorkerMan;
   currDirection: number = Direction.forward;
 
   constructor() {
@@ -15,31 +17,33 @@ export class GamePlay {
   }
 
   init(): void {
-    this.cityMan = new CityMan(100);
-    this.cityMan1 = new CityMan(200);
+    this.cityMan = new CityMan(200);
+    this.workerMan = new WorkerMan(100);
   }
 
-  update(deltaTime: number): void { 
+  update(deltaTime: number): void {
     if (gameInstance.isMovingPress) {
       gameInstance.fpsMovingCount += 1;
     } else {
       gameInstance.fpsMovingCount = 0;
     }
 
-    gameInstance.getContext()!.clearRect(
-      0,
-      0,
-      gameInstance.getViewport().width,
-      gameInstance.getViewport().height
-    );
+    gameInstance
+      .getContext()!
+      .clearRect(
+        0,
+        0,
+        gameInstance.getViewport().width,
+        gameInstance.getViewport().height
+      );
 
     this.cityMan.update();
-    this.cityMan1.update();
+    this.workerMan.update();
   }
 
   render(deltaTime: number): void {
     this.cityMan.render();
-    this.cityMan1.render();
+    this.workerMan.render();
   }
 
   run(): void {
@@ -55,10 +59,12 @@ export class GamePlay {
 
       while (dt > step) {
         dt = dt - step;
-        that.update(step);
+        that.update(dt);
+        that.render(dt);
       }
+
+      // that.render(dt);
       
-      that.render(dt);
       last = now;
       that.frameId = requestAnimationFrame(frame);
     }

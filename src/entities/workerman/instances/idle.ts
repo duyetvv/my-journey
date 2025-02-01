@@ -3,7 +3,7 @@ import { createImage } from "../../../helpers/createImage";
 import { Direction } from "../../../enums/io";
 import { RenderSpec, Specification } from "../../../interfaces/actor";
 
-export class ManIdle extends SpriteBase {
+export class WorkerIdle extends SpriteBase {
   image: HTMLImageElement = null;
   private paddingX: number = 46;
   private spriteWidth: number = 30;
@@ -43,9 +43,9 @@ export class ManIdle extends SpriteBase {
   update(direction: number): void {
     this.currDirection = direction;
     if (direction === Direction.forward) {
-      this.image = createImage("../../assets/citymen/business/idle.png");
+      this.image = createImage("../../assets/citymen/worker/Idle.png");
     } else {
-      this.image = createImage("../../assets/citymen/business/idle-flip.png");
+      this.image = createImage("../../assets/citymen/worker/Idle-flip.png");
     }
   }
 

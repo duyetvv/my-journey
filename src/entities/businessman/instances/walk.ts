@@ -5,18 +5,19 @@ import { RenderSpec, Specification } from "../../../interfaces/actor";
 
 export class WalkMan extends SpriteBase {
   image: HTMLImageElement = null;
-  private paddingX: number = 50;
-  private spriteWidth: number = 32;
-  private spriteHeight: number = 69;
+  private paddingX: number = 46;
+  private spriteWidth: number = 39;
+  private spriteHeight: number = 70;
 
   private spec: Specification = {
     size: { width: this.spriteWidth, height: this.spriteHeight },
-    velocity: 6,
+    velocity: 5,
     fps: 60,
   };
 
   constructor() {
     super(0, 5, 128, 69, 10);
+    this.getRenderSpec();
   }
 
   getSpec = (): Specification => this.spec;

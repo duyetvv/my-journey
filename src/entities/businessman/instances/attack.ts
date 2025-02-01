@@ -18,6 +18,7 @@ export class AttackMan extends SpriteBase {
 
   constructor() {
     super(0, 5, 128, 64, 4);
+    this.getRenderSpec();
   }
 
   getSpec = (): Specification => this.spec;

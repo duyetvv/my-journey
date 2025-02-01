@@ -6,12 +6,18 @@ export abstract class SpriteBase {
     private endIdx: number,
     private width: number,
     private height: number,
-    private spritesPerRow: number,
+    private spritesPerRow: number
   ) {}
 
   getSprite() {
-    this.currSpriteIdx++;
-    this.currSpriteIdx > this.endIdx && (this.currSpriteIdx = this.startIdx);
+    if (this.startIdx < this.endIdx) {
+      this.currSpriteIdx++;
+      this.currSpriteIdx > this.endIdx && (this.currSpriteIdx = this.startIdx);
+    } else {
+      this.currSpriteIdx = Math.abs(this.currSpriteIdx - 1);
+      this.currSpriteIdx < this.endIdx && (this.currSpriteIdx = this.startIdx);
+    }
+    
     let x = (this.currSpriteIdx % this.spritesPerRow) * this.width;
     let y = this.currSpriteIdx / this.spritesPerRow;
 

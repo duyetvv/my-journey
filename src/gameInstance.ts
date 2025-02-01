@@ -2,7 +2,7 @@ import { Direction } from "./enums/io";
 import { Size } from "./interfaces/size";
 
 class GameInstance {
-  gamePlayFPS: number = 60;
+  gamePlayFPS: number = 10;
   isAttackingPress: boolean = false;
   isMovingPress: boolean = false;
   fpsMovingCount: number = 0;

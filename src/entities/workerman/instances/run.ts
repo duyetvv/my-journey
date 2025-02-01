@@ -3,21 +3,21 @@ import { createImage } from "../../../helpers/createImage";
 import { Direction } from "../../../enums/io";
 import { RenderSpec, Specification } from "../../../interfaces/actor";
 
-export class ManIdle extends SpriteBase {
+export class WorkerRun extends SpriteBase {
   image: HTMLImageElement = null;
-  private paddingX: number = 46;
-  private spriteWidth: number = 30;
-  private spriteHeight: number = 66;
+  private paddingX: number = 42;
+  private spriteWidth: number = 44;
+  private spriteHeight: number = 68;
   private currDirection: number = Direction.forward;
 
   private spec: Specification = {
-    size: { width: 30, height: 66 },
-    velocity: 0,
+    size: { width: 30, height: 68 },
+    velocity: 16,
     fps: 60,
   };
 
   constructor() {
-    super(0, 5, 128, 66, 6);
+    super(0, 5, 128, 68, 10);
     this.getRenderSpec();
   }
 
@@ -25,16 +25,16 @@ export class ManIdle extends SpriteBase {
 
   getRenderSpec = (): RenderSpec => {
     const spriteInfo = this.getSprite();
-    const flipDistance: number =
-      this.currDirection === Direction.forward ? 0 : 4;
+    const isForward = this.currDirection === Direction.forward;
+    const spriteFootX = isForward ? 0 : -16;
 
     return {
       image: this.image,
-      sx: spriteInfo.x + this.paddingX + flipDistance,
+      sx: spriteInfo.x + this.paddingX,
       sy: spriteInfo.y,
       sw: this.spriteWidth,
       sh: this.spriteHeight,
-      sfx: 0,
+      sfx: spriteFootX,
       dw: this.spriteWidth,
       dh: this.spriteHeight
     };
@@ -43,9 +43,9 @@ export class ManIdle extends SpriteBase {
   update(direction: number): void {
     this.currDirection = direction;
     if (direction === Direction.forward) {
-      this.image = createImage("../../assets/citymen/business/idle.png");
+      this.image = createImage("../../assets/citymen/worker/Run.png");
     } else {
-      this.image = createImage("../../assets/citymen/business/idle-flip.png");
+      this.image = createImage("../../assets/citymen/worker/Run-flip.png");
     }
   }
 
